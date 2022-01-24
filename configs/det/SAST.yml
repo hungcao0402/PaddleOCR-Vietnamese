@@ -1,0 +1,119 @@
+Global:
+  debug: false
+  use_gpu: true
+  epoch_num: 300
+  log_smooth_window: 20
+  print_batch_step: 2
+  save_model_dir: ./output/SAST/
+  save_epoch_step: 2
+  eval_batch_step:
+  - 40000
+  - 50000
+  cal_metric_during_train: false
+  pretrained_model: ./pretrain_models/det_r50_vd_sast_icdar15_v2.0_train/best_accuracy
+  checkpoints: 
+  save_inference_dir: ./inference/SAST
+  use_visualdl: True
+  infer_img: null
+  save_res_path: ./output/sast.txt
+Architecture:
+  model_type: det
+  algorithm: SAST
+  Transform: 
+  Backbone:
+    name: ResNet_SAST
+    layers: 50
+  Neck:
+    name: SASTFPN
+    with_cab: true
+  Head:
+    name: SASTHead
+Loss:
+  name: SASTLoss
+Optimizer:
+  name: Adam
+  beta1: 0.9
+  beta2: 0.999
+  lr:
+    learning_rate: 0.001
+  regularizer:
+    name: L2
+    factor: 0
+PostProcess:
+  name: SASTPostProcess
+  score_thresh: 0.5
+  sample_pts_num: 2
+  nms_thresh: 0.5
+  expand_scale: 0.2
+  shrink_ratio_of_width: 0.15
+Metric:
+  name: DetMetric
+  main_indicator: hmean
+Train:
+  dataset:
+    name: SimpleDataSet
+    data_dir: ./train/vietnamese/train_images
+    label_file_list: [ ./train/train_label.txt ]
+    ratio_list: [1]
+    transforms:
+    - DecodeImage:
+        img_mode: BGR
+        channel_first: false
+    - DetLabelEncode: null
+    - SASTProcessTrain:
+        image_shape:
+        - 512
+        - 512
+        min_crop_side_ratio: 0.3
+        min_crop_size: 24
+        min_text_size: 4
+        max_text_size: 512
+    - KeepKeys:
+        keep_keys:
+        - image
+        - score_map
+        - border_map
+        - training_mask
+        - tvo_map
+        - tco_map
+  loader:
+    shuffle: false
+    drop_last: false
+    batch_size_per_card: 8
+    num_workers: 1
+Eval:
+  dataset:
+    name: SimpleDataSet
+    data_dir: ./train/vietnamese/test_image
+    label_file_list:
+    - ./train/test_label.txt
+    transforms:
+    - DecodeImage:
+        img_mode: BGR
+        channel_first: false
+    - DetLabelEncode: null
+    - DetResizeForTest:
+        resize_long: 1536
+    - NormalizeImage:
+        scale: 1./255.
+        mean:
+        - 0.485
+        - 0.456
+        - 0.406
+        std:
+        - 0.229
+        - 0.224
+        - 0.225
+        order: hwc
+    - ToCHWImage: null
+    - KeepKeys:
+        keep_keys:
+        - image
+        - shape
+        - polys
+        - ignore_tags
+  loader:
+    shuffle: False
+    drop_last: False
+    batch_size_per_card: 1 # must be 1
+    num_workers: 1

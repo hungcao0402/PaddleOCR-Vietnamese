@@ -1,0 +1,1 @@
+python3 ./tools/infer/predict_system.py --det_algorithm="SAST" --det_model_dir=./inference/SAST --rec_algorithm="SRN" --rec_model_dir=./inference/SRN/ --rec_image_shape="1, 64, 256" --drop_score=0.5 --image_dir="data/test_data/" --rec_char_type="ch" --use_gpu=True --rec_char_dict_path="./ppocr/utils/dict/vi_vietnam.txt" 
