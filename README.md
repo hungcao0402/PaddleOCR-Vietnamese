@@ -32,7 +32,7 @@ python3 tools/infer_rec.py -c ./configs/rec/SRN.yml -o Global.infer_img=im0001_1
 python3 tools/export_model.py -c ./configs/det/SAST.yml  
 python3 tools/export_model.py -c ./configs/rec/SRN.yml
 ```
-#Build docker image
+# Build docker image
 ```bash
 docker build -t sast_srn .
 ```
