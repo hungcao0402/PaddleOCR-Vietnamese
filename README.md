@@ -1,6 +1,10 @@
 # PaddleOCR-Vietnamese
 Scene text vietnamese
-
+# Setup
+```bash
+pip install -r requirements.txt
+pip install paddlepaddle-gpu
+```
 ## Train detection model
 ```bash
 python3 tools/train.py -c ./configs/det/SAST.yml
