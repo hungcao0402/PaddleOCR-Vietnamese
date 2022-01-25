@@ -35,16 +35,16 @@ python3 tools/export_model.py -c ./configs/rec/SRN.yml
 # Detection and recognition concatenate 
 ```bash
 python3 /content/drive/MyDrive/PaddleOCR/PaddleOCR/tools/infer/predict_system.py 
---use_gpu=True \
---det_algorithm="SAST" \
---det_model_dir="./inference/SAST" \
---rec_algorithm="SRN" \
---rec_model_dir="./inference/SRN/" \
---rec_image_shape="1, 64, 256" \
---image_dir=#path_img \
---rec_char_type="ch" \
---drop_score=0.7 \
---rec_char_dict_path="./ppocr/utils/dict/vi_vietnam.txt"
+                --use_gpu=True \
+                --det_algorithm="SAST" \
+                --det_model_dir="./inference/SAST" \
+                --rec_algorithm="SRN" \
+                --rec_model_dir="./inference/SRN/" \
+                --rec_image_shape="1, 64, 256" \
+                --image_dir=#path_img \
+                --rec_char_type="ch" \
+                --drop_score=0.7 \
+                --rec_char_dict_path="./ppocr/utils/dict/vi_vietnam.txt"
 ```
 # Build docker image
 ```bash
