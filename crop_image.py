@@ -43,6 +43,9 @@ for img_file in img_files:
     img_crop = get_rotate_crop_image(ori_im, tmp_box)
     img_crop_list.append(img_crop)
   img_name = img_file.split('\t')[0].split('.')[0]
+  
+  if not os.path.exists('./train/img_crop'):
+    os.mkdir('./train/img_crop') 
   print_draw_crop_rec_res(img_crop_list,img_name)
 
 
