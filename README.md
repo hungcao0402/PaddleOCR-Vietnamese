@@ -1,5 +1,6 @@
 # PaddleOCR-Vietnamese
 Scene text vietnamese
+
 Link blog: http://tutorials.aiclub.cs.uit.edu.vn/index.php/2022/04/20/nhan-dang-chu-tieng-viet-trong-anh-ngoai-canh/
 # Setup
 ```bash
